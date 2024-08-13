@@ -1,13 +1,13 @@
 <h1>{{$heading}}</h1>
 
-@php
+{{-- @php
     $test = 1;
 @endphp
 {{$test}}
 
 @if(count($listings) == 0)
 <p>No listings found</p>
-@endif
+@endif --}}
 
 @unless(count($listings) == 0)
 @foreach($listings as $listing)
