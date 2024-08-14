@@ -22,9 +22,7 @@ class ListingController extends Controller
 
     // Show single listing
     public function show(Listing $listing) {
-        return view('listings.show', [
-            'listing' => $listing
-        ]);
+        return view('listings.show', ['listing' => $listing]);
     }
 
     // Create - show form to create new listing
@@ -61,8 +59,31 @@ class ListingController extends Controller
     }
 
     // Edit - show form to edit listing
+    public function edit(Listing $listing) {
+        // dd($listing->title);
+        return view('listings.edit', ['listing' => $listing]);
+    }
 
     // Update - update listing
+    public function update(Request $request, Listing $listing) {
+        $formFields = $request->validate([
+            'title' => 'required',
+            'company' => 'required',
+            'location' => 'required',
+            'website' => 'required',
+            'email' => ['required', 'email'],
+            'tags' => 'required',
+            'description' => 'required'
+        ]);
+
+        if($request->hasFile('logo')) {
+            $formFields['logo'] = $request->file('logo')->store('logos', 'public'); // folder name: logos
+        }
+
+        $listing->update($formFields);
+  
+        return redirect("/listings/{$listing->id}")->with('message', 'Listing updated successfully!');
+    }
 
     // Destroy - delete listing
 }
