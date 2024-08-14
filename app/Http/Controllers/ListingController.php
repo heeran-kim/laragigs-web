@@ -14,8 +14,7 @@ class ListingController extends Controller
         return view('listings.index', [
             // 'listings' => Listing::all()
             // 'listings' => Listing::latest()->filter(request(['tag', 'search']))->get()
-            'listings' => Listing::latest()->filter(request(['tag', 
-            'search']))->paginate(6)
+            'listings' => Listing::latest()->filter(request(['tag', 'search']))->paginate(6)
             // 'listings' => Listing::latest()->filter(request(['tag', 
             // 'search']))->simplePaginate(2)
         ]);
@@ -36,6 +35,9 @@ class ListingController extends Controller
     // Store - store new listing
     public function store(Request $request) {
         // dd($request->all());
+        // dd($request->file('logo'));
+        // dd($request->file('logo')->store()); // storage > app > public
+
         $formFields = $request->validate([
             'title' => 'required',
             'company' => ['required', Rule::unique('listings', 'company')],
@@ -46,10 +48,15 @@ class ListingController extends Controller
             'description' => 'required'
         ]);
 
+        if($request->hasFile('logo')) {
+            $formFields['logo'] = $request->file('logo')->store('logos', 'public'); // folder name: logos
+        }
+        // php artisan storage:link (to directly access to the stored images)
+        // http://laragigs.test/storage/logos/uX9NTIIXIfNYtgBFJaqxD34xsHQPkvTqOXi1vNzs.png
+
         Listing::create($formFields);
 
-        // Session::flash('message', 'Listing Created');
-
+        // Session::flash('message', 'Listing Created');        
         return redirect('/')->with('message', 'Listing created successfully!');
     }
 

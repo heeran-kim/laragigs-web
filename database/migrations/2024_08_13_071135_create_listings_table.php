@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // php artisan migrate:refresh --seed
         Schema::create('listings', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->string('logo')->nullable(); // file path, if it doesn't have image, that's fine (=nullable)
             $table->string('tags');
             $table->string('company');
             $table->string('location');
