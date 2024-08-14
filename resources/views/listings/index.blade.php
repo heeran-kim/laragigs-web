@@ -27,4 +27,10 @@
 
     </div>
 {{-- @endsection --}}
+
+<div class="mt-6 p-4">
+    {{$listings->links()}}
+    {{-- pagination: php artisan vendor:publish -> PaginationServiceProvider --}}
+</div>
+
 </x-layout>
