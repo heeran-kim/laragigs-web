@@ -52,6 +52,8 @@ class ListingController extends Controller
         // php artisan storage:link (to directly access to the stored images)
         // http://laragigs.test/storage/logos/uX9NTIIXIfNYtgBFJaqxD34xsHQPkvTqOXi1vNzs.png
 
+        $formFields['user_id'] = auth()->id();
+
         Listing::create($formFields);
 
         // Session::flash('message', 'Listing Created');        
@@ -89,5 +91,10 @@ class ListingController extends Controller
     public function destroy(Listing $listing) {
         $listing->delete();
         return redirect('/')->with('message', 'Listing deleted successfully!');
+    }
+
+    // Manage Listings
+    public function manage() {
+        return view('listings.manage', ['listings' => auth()->user()->listings()->get()]);
     }
 }

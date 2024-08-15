@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(5)->create();
+        // User::factory(5)->create();
         // php artisan migrate:refresh --seed
 
         // User::factory()->create([
@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
         // ]);
         // php artisan make:factory ListingFactory
 
-        Listing::factory(6)->create();
+        // Listing::factory(6)->create();
 
         // Listing::create([
         //     'title' => 'Laravel Senior Developer',
@@ -54,5 +54,14 @@ class DatabaseSeeder extends Seeder
         //     aliquid, quam illum quaerat consequatur!
         //     Expedita ab consectetur tenetur delensiti?'
         // ]);
+
+        $user = User::factory()->create([
+            'name' => 'John Doe',
+            'email' => 'john@gmail.com'
+        ]);
+
+        Listing::factory(6)->create([
+            'user_id' => $user->id
+        ]);
     }
 }
