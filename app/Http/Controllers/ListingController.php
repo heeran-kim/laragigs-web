@@ -33,7 +33,7 @@ class ListingController extends Controller
     // Store - store new listing
     public function store(Request $request) {
         // dd($request->all());
-        // dd($request->file('logo'));
+        dd($request->file());
         // dd($request->file('logo')->store()); // storage > app > public
 
         $formFields = $request->validate([
